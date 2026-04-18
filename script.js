@@ -2,33 +2,49 @@ function sendMessage() {
     let input = document.getElementById("userInput").value;
     let chatbox = document.getElementById("chatbox");
 
-    // Show user message
-    chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
+    if (input.trim() === "") return;
 
-    let response = getBotResponse(input);
+    // Show user message
+    chatbox.innerHTML += `<p class="user-msg"><b>You:</b> ${input}</p>`;
+
+    let response = getBotResponse(input.toLowerCase());
 
     // Show bot response
-    chatbox.innerHTML += "<p><b>Bot:</b> " + response + "</p>";
+    chatbox.innerHTML += `<p class="bot-msg"><b>Bot:</b> ${response}</p>`;
 
     document.getElementById("userInput").value = "";
+
+    chatbox.scrollTop = chatbox.scrollHeight;
 }
 
+// RULE-BASED RESPONSES
 function getBotResponse(input) {
-    input = input.toLowerCase();
 
     if (input.includes("hello") || input.includes("hi")) {
         return "Hello! How can I help you?";
-    } 
+    }
+
     else if (input.includes("how are you")) {
-        return "I'm fine! What about you?";
-    } 
-    else if (input.includes("your name")) {
-        return "I am a simple chatbot.";
-    } 
+        return "I'm just a bot, but I'm doing great!";
+    }
+
+    else if (input.includes("what is your name")) {
+        return "I am a Rule-Based Chatbot ";
+    }
+
     else if (input.includes("bye")) {
         return "Goodbye! Have a nice day!";
-    } 
+    }
+    else if (input.includes("what is today's date")) {
+        let date = new Date().toLocaleDateString();
+        return "Today's date is  " + date;
+    }
+
+    else if (input.includes("help")) {
+        return "You can ask me simple questions like hello, name, or help.";
+    }
+
     else {
-        return "Sorry, I don't understand.";
+        return "Sorry, I don't understand that.";
     }
 }
